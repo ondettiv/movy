@@ -1,0 +1,7 @@
+.showSpacer {
+  content: '-';
+}
+
+.noSpacer {
+  content: '';
+}
