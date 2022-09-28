@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import './styles.css';
-import { genresList } from '../../services';
+import { setInStorage, getFromStorage, filterByReference } from '../../services';
 import StarRating from '../StarRating';
 
 function Card({ movie, isPoster }) {
   const movieImagePath = isPoster ? movie.poster_path : movie.backdrop_path;
   const [infoVisible, setInfoVisible] = useState(false);
+  const genresLabelList = filterByReference(getFromStorage('genresList'), movie.genre_ids);
   let timeOutId = null;
-
-  const filterByReference = (arr1, arr2) => {
-    let res = [];
-    res = arr1.filter((el) => arr2.find((element) => element === el.id));
-    return res.slice(0, 3);
-  };
-
-  const genresLabelList = filterByReference(genresList, movie.genre_ids);
 
   function showInfo() {
     timeOutId = setTimeout(() => {
@@ -27,8 +20,17 @@ function Card({ movie, isPoster }) {
     clearTimeout(timeOutId);
   }
 
+  function selectMovie() {
+    console.log('selectMovie: ', movie);
+    setInStorage('selectedMovie', movie);
+  }
+
   return (
-    <div className="w-48 flex-none origin-center ease-out duration-100 hover:duration-300 hover:scale-125">
+    <div
+      className="w-48 flex-none origin-center ease-out duration-100 hover:duration-300 hover:scale-125"
+      onClick={selectMovie}
+      aria-hidden="true"
+    >
       <img
         className="overlay-cover hover:opacity-70"
         src={`https://image.tmdb.org/t/p/w500/${movieImagePath}`}

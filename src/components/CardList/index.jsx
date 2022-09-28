@@ -10,8 +10,6 @@ function CardList({
   options,
 }) {
   const [movieList, setMovieList] = useState([]);
-  const [maxPages, setMaxPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(options.page);
   const initialPosition = 40;
   const idName = `${id}-cardList`;
   const containerName = `${id}-containerCardList`;
@@ -23,7 +21,6 @@ function CardList({
     isFetching = true;
     const movies = await fetchFrom(url, fetchOptions);
     setMovieList([...movieList, ...movies.results]);
-    setMaxPages(movies.total_pages);
     isFetching = false;
   };
 
@@ -59,13 +56,6 @@ function CardList({
     } else if (direction === 'right') {
       if (Math.abs(x) <= maxListWidth) {
         x -= step;
-      } else if (!isFetching && currentPage < maxPages && Math.abs(x) >= maxListWidth) {
-        const nextPage = {
-          ...options,
-          page: +currentPage + 1,
-        };
-        fetchMovies(nextPage);
-        setCurrentPage(+currentPage + 1);
       }
     }
 
