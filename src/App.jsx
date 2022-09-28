@@ -11,7 +11,6 @@ function App() {
 
   const configParams2 = {
     page: '1',
-    genres: '878',
     isPoster: true,
   };
 

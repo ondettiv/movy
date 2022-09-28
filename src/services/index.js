@@ -34,8 +34,10 @@ export const fetchGenres = async () => {
       console.log('json ERROR: ', error);
     });
   console.log(result);
-
+  localStorage.setItem('genresList', JSON.stringify(result.genres));
   return (result.genres);
 };
 
-export const genresList = fetchGenres();
+fetchGenres();
+
+export const genresList = JSON.parse(localStorage.getItem('genresList'));

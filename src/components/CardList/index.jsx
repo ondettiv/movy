@@ -84,7 +84,7 @@ function CardList({
       </h3>
       <div id={containerName} className="relative overflow-hidden">
         <div className={`flex items-center ${options.isPoster ? 'listPosterContainer' : 'listContainer'}`}>
-          <div id={idName} className={`left-[${initialPosition}px] ease-out relative flex gap-6`}>
+          <div id={idName} className="left-[40px] ease-out relative flex gap-6">
             {movieList.map((movie) => (
               <Movie key={movie.id} movie={movie} isPoster={options.isPoster} />
             ))}

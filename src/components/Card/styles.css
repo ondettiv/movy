@@ -5,3 +5,19 @@
 .noSpacer {
   content: '';
 }
+
+.bullet_spacer::after {
+  content: " \2022  ";
+}
+.bullet_spacer:last-child::after {
+  content: ""
+}
+
+.genre {
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.title {
+  line-height: 15px;
+}

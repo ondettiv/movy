@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import './styles.css';
+import { genresList } from '../../services';
+import StarRating from '../StarRating';
 
 function Card({ movie, isPoster }) {
   const movieImagePath = isPoster ? movie.poster_path : movie.backdrop_path;
   const [infoVisible, setInfoVisible] = useState(false);
   let timeOutId = null;
+
+  const filterByReference = (arr1, arr2) => {
+    let res = [];
+    res = arr1.filter((el) => arr2.find((element) => element === el.id));
+    return res.slice(0, 3);
+  };
+
+  const genresLabelList = filterByReference(genresList, movie.genre_ids);
 
   function showInfo() {
     timeOutId = setTimeout(() => {
@@ -30,11 +40,19 @@ function Card({ movie, isPoster }) {
         && (
           infoVisible
           && (
-            <div className="antialiased min-h-full pointer-events-none">
-              <p className="absolute bottom-10 text-base font-bold pl-2  pr-2">{movie.title}</p>
-              <div className="absolute bottom-2 text-sm pl-2 pr-2">
-                {movie.genre_ids.map((genre) => (
-                  <span key={genre} className="text-sm font-light">{genre}</span>
+            <div className="absolute top-0 w-full antialiased min-h-full pointer-events-none">
+              <p className="title absolute bottom-[50px] text-sm font-bold pl-2  pr-2">{movie.title}</p>
+              { movie.vote_average !== 0
+                && (
+                <div className="absolute top-[60px] pl-2 pr-2">
+                  <StarRating rate={movie.vote_average} />
+                </div>
+                )}
+              <div className="genre absolute top-20 text-sm pl-2 pr-8">
+                {genresLabelList.map((genre) => (
+                  <span key={`${movie.id}-${genre.id}`} className="font-light bullet_spacer">
+                    {genre.name}
+                  </span>
                 ))}
               </div>
             </div>
