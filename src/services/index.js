@@ -1,17 +1,27 @@
 import { API_KEY } from './constants';
 
-export default async function fetchMovies(url, options) {
-  let {
+export async function fetchFrom(url, options) {
+  const {
     page = '1',
     genres = '',
+    movieId,
   } = options;
 
-  page = `&page=${page}`;
-  let fetchUrl = `https://api.themoviedb.org/3/movie/popular?${API_KEY}${page}`;
+  let fetchUrl;
+  switch (url) {
+    case '/movie/':
+      fetchUrl = `https://api.themoviedb.org/3${url}${movieId}?${API_KEY}&page=${page}`;
+      break;
 
-  if (genres !== '') {
-    genres = `&with_genres=${genres}`;
-    fetchUrl = `https://api.themoviedb.org/3/discover/movie?${API_KEY}${genres}${page}`;
+    case '/discover/movie':
+      if (genres !== '') {
+        fetchUrl = `https://api.themoviedb.org/3${url}?${API_KEY}&with_genres=${genres}&page=${page}`;
+      }
+      break;
+
+    default:
+      fetchUrl = `https://api.themoviedb.org/3/movie/popular?${API_KEY}&page=${page}`;
+      break;
   }
 
   const data = await fetch(fetchUrl)
@@ -45,7 +55,7 @@ export const fetchGenres = async () => {
 export const filterByReference = (arr1, arr2) => {
   let res = [];
   res = arr1.filter((el) => arr2.find((element) => element === el.id));
-  return res.slice(0, 3);
+  return res;
 };
 
 fetchGenres();

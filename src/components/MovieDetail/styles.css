@@ -1,0 +1,24 @@
+.movieDetail .showSpacer {
+  content: '-';
+}
+
+.movieDetail .noSpacer {
+  content: '';
+}
+
+.movieDetail .coma_spacer::after {
+  content: ", ";
+}
+
+.movieDetail .coma_spacer:last-child::after {
+  content: ""
+}
+
+.movieDetail .genre {
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.movieDetail .title {
+  line-height: 15px;
+}

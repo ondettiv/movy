@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import './styles.css';
-import { setInStorage, getFromStorage, filterByReference } from '../../services';
+import {
+  fetchFrom,
+  setInStorage,
+  getFromStorage,
+  filterByReference,
+} from '../../services';
 import StarRating from '../StarRating';
 
-function Card({ movie, isPoster }) {
+function Card({ movie, isPoster, setMovieInfo }) {
   const movieImagePath = isPoster ? movie.poster_path : movie.backdrop_path;
   const [infoVisible, setInfoVisible] = useState(false);
-  const genresLabelList = filterByReference(getFromStorage('genresList'), movie.genre_ids);
+  const genresLabelList = filterByReference(getFromStorage('genresList'), movie.genre_ids).slice(0, 3);
   let timeOutId = null;
 
   function showInfo() {
@@ -20,9 +25,10 @@ function Card({ movie, isPoster }) {
     clearTimeout(timeOutId);
   }
 
-  function selectMovie() {
-    console.log('selectMovie: ', movie);
-    setInStorage('selectedMovie', movie);
+  async function selectMovie() {
+    const selectedMovie = await fetchFrom('/movie/', { movieId: movie.id });
+    setInStorage('selectedMovie', selectedMovie);
+    setMovieInfo(selectedMovie);
   }
 
   return (

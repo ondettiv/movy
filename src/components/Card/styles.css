@@ -9,6 +9,7 @@
 .bullet_spacer::after {
   content: " \2022  ";
 }
+
 .bullet_spacer:last-child::after {
   content: ""
 }

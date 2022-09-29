@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Movie from '../Card';
-import fetchFrom from '../../services';
+import { fetchFrom } from '../../services';
 import './styles.css';
 
 function CardList({
@@ -8,6 +8,7 @@ function CardList({
   title,
   url,
   options,
+  setMovieInfo,
 }) {
   const [movieList, setMovieList] = useState([]);
   const initialPosition = 40;
@@ -76,7 +77,12 @@ function CardList({
         <div className={`flex items-center ${options.isPoster ? 'listPosterContainer' : 'listContainer'}`}>
           <div id={idName} className="left-[40px] ease-out relative flex gap-6">
             {movieList.map((movie) => (
-              <Movie key={movie.id} movie={movie} isPoster={options.isPoster} />
+              <Movie
+                key={movie.id}
+                movie={movie}
+                isPoster={options.isPoster}
+                setMovieInfo={setMovieInfo}
+              />
             ))}
           </div>
         </div>
