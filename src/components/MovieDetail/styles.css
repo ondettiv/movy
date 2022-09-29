@@ -22,3 +22,15 @@
 .movieDetail .title {
   line-height: 15px;
 }
+
+.movieDetail  .colored {
+  color: rgba(146, 170, 215, 1);
+}
+
+.movieDetail .pillPink {
+  font-size: 14px;
+  background-color: #FF056C;
+  border: 1px solid #FF056C;
+  border-radius: 15px;
+  padding: 2px 8px;
+}

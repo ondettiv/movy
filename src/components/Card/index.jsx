@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css';
 import {
   fetchFrom,
@@ -11,7 +11,7 @@ import StarRating from '../StarRating';
 function Card({ movie, isPoster, setMovieInfo }) {
   const movieImagePath = isPoster ? movie.poster_path : movie.backdrop_path;
   const [infoVisible, setInfoVisible] = useState(false);
-  const genresLabelList = filterByReference(getFromStorage('genresList'), movie.genre_ids).slice(0, 3);
+  const [genresLabelList, setGenresLabelList] = useState({});
   let timeOutId = null;
 
   function showInfo() {
@@ -30,6 +30,10 @@ function Card({ movie, isPoster, setMovieInfo }) {
     setInStorage('selectedMovie', selectedMovie);
     setMovieInfo(selectedMovie);
   }
+
+  useEffect(() => {
+    setGenresLabelList(filterByReference(getFromStorage('genresList'), movie.genre_ids).slice(0, 3));
+  }, []);
 
   return (
     <div
@@ -52,7 +56,7 @@ function Card({ movie, isPoster, setMovieInfo }) {
               <p className="title absolute bottom-[50px] text-sm font-bold pl-2  pr-2">{movie.title}</p>
               { movie.vote_average !== 0
                 && (
-                <div className="absolute top-[60px] pl-2 pr-2">
+                <div className="absolute top-[63px] text-sm pl-2 pr-2">
                   <StarRating rate={movie.vote_average} />
                 </div>
                 )}

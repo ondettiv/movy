@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Movie from '../Card';
 import { fetchFrom } from '../../services';
 import './styles.css';
 
 function CardList({
-  id,
   title,
   url,
   options,
@@ -12,17 +11,14 @@ function CardList({
 }) {
   const [movieList, setMovieList] = useState([]);
   const initialPosition = 40;
-  const idName = `${id}-cardList`;
-  const containerName = `${id}-containerCardList`;
+  const containerRef = useRef();
+  const cardListRef = useRef();
   let direction = '';
   let myTimer = null;
-  let isFetching = false;
 
   const fetchMovies = async (fetchOptions) => {
-    isFetching = true;
     const movies = await fetchFrom(url, fetchOptions);
     setMovieList([...movieList, ...movies.results]);
-    isFetching = false;
   };
 
   useEffect(() => {
@@ -34,20 +30,15 @@ function CardList({
   }
 
   function animateCardList() {
-    if (isFetching) {
-      stopMove();
-      return;
-    }
-
-    const cardListElement = document.getElementById(idName);
-    const containerCardListElement = document.getElementById(containerName);
+    const cardListElement = cardListRef;
+    const containerCardListElement = containerRef;
     const maxListWidth = (
       cardListElement.offsetWidth
       - containerCardListElement.offsetWidth
       + initialPosition
     );
     const step = 7;
-    let x = document.getElementById(idName).offsetLeft;
+    let x = cardListRef.offsetLeft;
     if (direction === 'left') {
       if (x < initialPosition) {
         x += step;
@@ -60,7 +51,7 @@ function CardList({
       }
     }
 
-    document.getElementById(idName).style.left = `${x}px`;
+    cardListRef.style.left = `${x}px`;
   }
 
   function startMove() {
@@ -73,9 +64,9 @@ function CardList({
       <h3 className="text-left font-bold mb-4">
         {`${title}:`}
       </h3>
-      <div id={containerName} className="relative overflow-hidden">
+      <div ref={containerRef} className="relative overflow-hidden">
         <div className={`flex items-center ${options.isPoster ? 'listPosterContainer' : 'listContainer'}`}>
-          <div id={idName} className="left-[40px] ease-out relative flex gap-6">
+          <div ref={cardListRef} className="left-[40px] ease-out relative flex gap-6">
             {movieList.map((movie) => (
               <Movie
                 key={movie.id}

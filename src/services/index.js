@@ -10,7 +10,7 @@ export async function fetchFrom(url, options) {
   let fetchUrl;
   switch (url) {
     case '/movie/':
-      fetchUrl = `https://api.themoviedb.org/3${url}${movieId}?${API_KEY}&page=${page}`;
+      fetchUrl = `https://api.themoviedb.org/3${url}${movieId}?${API_KEY}&append_to_response=images,videos`;
       break;
 
     case '/discover/movie':
@@ -29,7 +29,6 @@ export async function fetchFrom(url, options) {
       console.log('LOAD ERROR: ', error);
     });
   const movies = await data.json();
-  console.log(movies);
 
   return movies;
 }
@@ -47,7 +46,6 @@ export const fetchGenres = async () => {
     .catch((error) => {
       console.log('json ERROR: ', error);
     });
-  console.log(result);
   setInStorage('genresList', result.genres);
   return (result.genres);
 };
@@ -57,5 +55,3 @@ export const filterByReference = (arr1, arr2) => {
   res = arr1.filter((el) => arr2.find((element) => element === el.id));
   return res;
 };
-
-fetchGenres();
