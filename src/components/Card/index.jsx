@@ -33,7 +33,7 @@ function Card({ movie, isPoster, setMovieInfo }) {
 
   return (
     <div
-      className="w-48 flex-none origin-center ease-out duration-100 hover:duration-300 hover:scale-125"
+      className="card w-48 flex-none origin-center ease-out duration-100 hover:duration-300 hover:scale-125"
       onClick={selectMovie}
       aria-hidden="true"
     >

@@ -5,17 +5,13 @@ import { getFromStorage } from '../../services';
 
 function Home() {
   const [movieInfo, setMovieInfo] = useState(getFromStorage('selectedMovie'));
+  const genresLabelList = getFromStorage('genresList');
+  console.log(genresLabelList);
 
   useEffect(() => {
   });
 
-  const configParams = {
-    page: '1',
-    genres: '12',
-    isPosert: false,
-  };
-
-  const configParams2 = {
+  let configParams = {
     page: '1',
     isPoster: true,
   };
@@ -23,8 +19,13 @@ function Home() {
   return (
     <>
       <MovieDetail movieInfo={movieInfo} />
-      <MovieList id="popular" title="Popular on Movy" url="/discover/movie" options={configParams} setMovieInfo={setMovieInfo} />
-      <MovieList id="top_rated" title="Top Rated" url="/movie/top_rated" options={configParams2} setMovieInfo={setMovieInfo} />
+      <MovieList id="top_rated" title="Popular on Movy" url="/movie/popular" options={configParams} setMovieInfo={setMovieInfo} />
+      {genresLabelList.map((genre) => {
+        configParams = { ...configParams, genres: genre.id, isPoster: false };
+
+        return <MovieList key={genre.id} id={`byGenre${genre.id}`} title={genre.name} url="/discover/movie" options={configParams} setMovieInfo={setMovieInfo} />;
+      })}
+      ;
     </>
   );
 }
