@@ -69,7 +69,7 @@ function CardList({
           <div ref={cardListRef} className="left-[40px] ease-out relative flex gap-6">
             {movieList.map((movie) => (
               <Movie
-                key={movie.id}
+                key={`movie-${movie.id}`}
                 movie={movie}
                 isPoster={options.isPoster}
                 setMovieInfo={setMovieInfo}

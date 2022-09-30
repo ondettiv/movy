@@ -2,39 +2,35 @@ import React, { useState, useEffect } from 'react';
 import './styles.css';
 import {
   fetchFrom,
-  setInStorage,
-  getFromStorage,
+  setSelectedMovie,
+  getGenresList,
 } from '../../services';
 import StarRating from '../StarRating';
+import movyLogo from '../../assets/logos/movy.png';
 
 function Card({ movie, isPoster, setMovieInfo }) {
   const movieImagePath = isPoster ? movie.poster_path : movie.backdrop_path;
   const [infoVisible, setInfoVisible] = useState(false);
   const [genresLabelList, setGenresLabelList] = useState({});
-  let timeOutId = null;
 
   function showInfo() {
-    timeOutId = setTimeout(() => {
-      setInfoVisible(true);
-    }, 250);
+    setInfoVisible(true);
   }
 
   function hideInfo() {
     setInfoVisible(false);
-    clearTimeout(timeOutId);
   }
 
   async function selectMovie() {
     const selectedMovie = await fetchFrom('/movie/', { movieId: movie.id });
-    setInStorage('selectedMovie', selectedMovie);
+    setSelectedMovie(selectedMovie);
     setMovieInfo(selectedMovie);
+    console.log('SELECTED MOVIE: ', selectedMovie);
   }
 
   useEffect(() => {
-    const genresList = getFromStorage('genresList');
-    const filteredGenres = genresList.filter((el) => (
-      movie.genre_ids.find((element) => (
-        element === el.id))));
+    const genresList = getGenresList('genresList');
+    const filteredGenres = genresList.filter((el) => (movie.genre_ids.includes(el.id)));
     setGenresLabelList(filteredGenres.slice(0, 3));
   }, []);
 
@@ -44,10 +40,13 @@ function Card({ movie, isPoster, setMovieInfo }) {
       onClick={selectMovie}
       aria-hidden="true"
     >
-      <img
-        className="overlay-cover hover:opacity-70"
-        src={`https://image.tmdb.org/t/p/w500/${movieImagePath}`}
-        alt={movie.title}
+      <div
+        className="bg-center bg-no-repeat w-[192px] hover:opacity-70"
+        style={{
+          backgroundImage: `url(https://image.tmdb.org/t/p/w500/${movieImagePath}), url(${movyLogo})`,
+          backgroundSize: 'cover, contain',
+          height: isPoster ? 288 : 108,
+        }}
         onMouseEnter={showInfo}
         onMouseLeave={hideInfo}
       />

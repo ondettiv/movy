@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import MovieDetail from '../../components/MovieDetail';
 import MovieList from '../../components/CardList';
-import { getFromStorage } from '../../services';
+import { getSelectedMovie, getGenresList } from '../../services';
 
 function Home() {
   const [movieInfo, setMovieInfo] = useState(null);
-  const genresLabelList = getFromStorage('genresList');
+  const genresLabelList = getGenresList();
 
   useEffect(() => {
-    setMovieInfo(getFromStorage('selectedMovie'));
+    setMovieInfo(getSelectedMovie());
   }, []);
 
   let configParams = {
