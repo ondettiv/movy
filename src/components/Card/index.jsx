@@ -4,7 +4,6 @@ import {
   fetchFrom,
   setInStorage,
   getFromStorage,
-  filterByReference,
 } from '../../services';
 import StarRating from '../StarRating';
 
@@ -32,7 +31,11 @@ function Card({ movie, isPoster, setMovieInfo }) {
   }
 
   useEffect(() => {
-    setGenresLabelList(filterByReference(getFromStorage('genresList'), movie.genre_ids).slice(0, 3));
+    const genresList = getFromStorage('genresList');
+    const filteredGenres = genresList.filter((el) => (
+      movie.genre_ids.find((element) => (
+        element === el.id))));
+    setGenresLabelList(filteredGenres.slice(0, 3));
   }, []);
 
   return (

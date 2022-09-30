@@ -30,15 +30,15 @@ function CardList({
   }
 
   function animateCardList() {
-    const cardListElement = cardListRef;
-    const containerCardListElement = containerRef;
+    const cardListElement = cardListRef.current;
+    const containerCardListElement = containerRef.current;
     const maxListWidth = (
       cardListElement.offsetWidth
       - containerCardListElement.offsetWidth
       + initialPosition
     );
     const step = 7;
-    let x = cardListRef.offsetLeft;
+    let x = cardListElement.offsetLeft;
     if (direction === 'left') {
       if (x < initialPosition) {
         x += step;
@@ -51,7 +51,7 @@ function CardList({
       }
     }
 
-    cardListRef.style.left = `${x}px`;
+    cardListElement.style.left = `${x}px`;
   }
 
   function startMove() {

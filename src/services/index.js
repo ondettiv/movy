@@ -49,9 +49,3 @@ export const fetchGenres = async () => {
   setInStorage('genresList', result.genres);
   return (result.genres);
 };
-
-export const filterByReference = (arr1, arr2) => {
-  let res = [];
-  res = arr1.filter((el) => arr2.find((element) => element === el.id));
-  return res;
-};
