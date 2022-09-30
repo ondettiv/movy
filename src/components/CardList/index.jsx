@@ -60,7 +60,7 @@ function CardList({
   }
 
   return (
-    <div className="p-8 w-screen">
+    <div className="px-8 w-screen">
       <h3 className="text-left font-bold mb-4">
         {`${title}:`}
       </h3>

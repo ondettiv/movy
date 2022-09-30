@@ -44,7 +44,7 @@ function Card({ movie, isPoster, setMovieInfo }) {
         className="bg-center bg-no-repeat w-[192px] hover:opacity-70"
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/w500/${movieImagePath}), url(${movyLogo})`,
-          backgroundSize: 'cover, contain',
+          backgroundSize: 'cover, 50%',
           height: isPoster ? 288 : 108,
         }}
         onMouseEnter={showInfo}
