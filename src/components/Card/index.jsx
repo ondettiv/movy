@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
 import {
-  fetchFrom,
+  fetchMovie,
   setSelectedMovie,
   getGenresList,
 } from '../../services';
@@ -22,7 +22,7 @@ function Card({ movie, isPoster, setMovieInfo }) {
   }
 
   async function selectMovie() {
-    const selectedMovie = await fetchFrom('/movie/', { movieId: movie.id });
+    const selectedMovie = await fetchMovie(movie.id);
     setSelectedMovie(selectedMovie);
     setMovieInfo(selectedMovie);
     console.log('SELECTED MOVIE: ', selectedMovie);

@@ -22,11 +22,18 @@ function Home() {
         && (
           <>
             <MovieDetail movieInfo={movieInfo} />
-            <MovieList id="top_rated" title="Popular on Movy" url="/movie/popular" options={configParams} setMovieInfo={setMovieInfo} />
+            <MovieList id="top_rated" title="Popular on Movy" options={configParams} setMovieInfo={setMovieInfo} />
             {genresLabelList.map((genre) => {
               configParams = { ...configParams, genres: genre.id, isPoster: false };
 
-              return <MovieList key={genre.id} title={genre.name} url="/discover/movie" options={configParams} setMovieInfo={setMovieInfo} />;
+              return (
+                <MovieList
+                  key={genre.id}
+                  title={genre.name}
+                  options={configParams}
+                  setMovieInfo={setMovieInfo}
+                />
+              );
             })}
             ;
           </>

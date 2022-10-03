@@ -1,5 +1,8 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import NavBar from './components/NavBar';
 import Home from './pages/Home';
+import Movie from './pages/Movie';
 import { fetchGenres } from './services';
 import './App.css';
 
@@ -8,9 +11,13 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <Home />
-      </header>
+      <NavBar />
+      <div className="screenContainer">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movie" element={<Movie />} />
+        </Routes>
+      </div>
     </div>
   );
 }

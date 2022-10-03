@@ -18,7 +18,7 @@ function MovieDetail({ movieInfo }) {
   return (
     <div className="movieDetail h-[700px] w-full">
       <div className="bg-cover bg-center bg-top h-[700px] w-full opacity-40" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original/${movieInfo.backdrop_path})` }} />
-      <div className="absolute top-[0px] w-full">
+      <div className="absolute top-[50px] w-full">
         <div className="relative top-[125px] left-52 text-sm">
           {releaseYear}
           {' \u2022 '}

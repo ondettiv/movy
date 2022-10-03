@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Movie from '../Card';
-import { fetchFrom } from '../../services';
+import { fetchMovieByGenre, fetchPopular } from '../../services';
 import './styles.css';
 
 function CardList({
   title,
-  url,
   options,
   setMovieInfo,
 }) {
@@ -17,8 +16,14 @@ function CardList({
   let myTimer = null;
 
   const fetchMovies = async (fetchOptions) => {
-    const movies = await fetchFrom(url, fetchOptions);
-    setMovieList([...movieList, ...movies.results]);
+    let movies;
+    if (options.genre !== null) {
+      movies = await fetchMovieByGenre(fetchOptions);
+    } else {
+      movies = await fetchPopular();
+    }
+    console.log('QUE ES MOVIE: ', movies);
+    setMovieList(movies.results);
   };
 
   useEffect(() => {
@@ -60,8 +65,8 @@ function CardList({
   }
 
   return (
-    <div className="px-8 w-screen">
-      <h3 className="text-left font-bold mb-4">
+    <div className="px-8 pb-4 w-screen">
+      <h3 className="text-left font-bold">
         {`${title}:`}
       </h3>
       <div ref={containerRef} className="relative overflow-hidden">

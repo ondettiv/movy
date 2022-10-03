@@ -1,12 +1,5 @@
 .App {
   background-color: black;
-}
-
-.App-header {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
