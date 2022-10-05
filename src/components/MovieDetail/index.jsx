@@ -9,7 +9,7 @@ import './styles.css';
 
 function MovieDetail({ movieInfo }) {
   const releaseYear = movieInfo.release_date.split('-')[0];
-  const director = movieInfo.credits.crew.find((element) => element.department === 'Directing').name;
+  const director = movieInfo.credits.crew.find((element) => element.department === 'Directing')?.name;
   const movieDuration = toHoursAndMinutes(movieInfo.runtime);
 
   return (
@@ -25,7 +25,7 @@ function MovieDetail({ movieInfo }) {
             </span>
           ))}
         </div>
-        <div className="relative top-[165px] left-52 text-5xl font-bold">{movieInfo?.title.toUpperCase()}</div>
+        <div className="relative top-[165px] left-52 text-5xl font-bold w-3/5">{movieInfo?.title.toUpperCase()}</div>
         <div className="relative flex items-center top-[200px] left-52 mr-12">
           <div className="pillPink">{movieDuration}</div>
           <div className="relative bg-contain bg-center w-[22px] h-[25px] ml-12 mr-2 " style={{ backgroundImage: `url(${directorIcon})` }} />

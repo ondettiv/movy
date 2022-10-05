@@ -26,7 +26,6 @@ function CardList({
     } else {
       movies = await fetchPopular();
     }
-    console.log('QUE ES MOVIE: ', movies);
     setMovieList(movies.results);
   };
 

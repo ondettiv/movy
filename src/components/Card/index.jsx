@@ -25,7 +25,6 @@ function Card({ movie, isPoster, setMovieInfo }) {
     const selectedMovie = await fetchMovie(movie.id);
     setSelectedMovie(selectedMovie);
     setMovieInfo(selectedMovie);
-    console.log('SELECTED MOVIE: ', selectedMovie);
   }
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
@@ -7,7 +7,9 @@ import { fetchGenres } from './services';
 import './App.css';
 
 function App() {
-  fetchGenres();
+  useEffect(() => {
+    fetchGenres();
+  });
 
   return (
     <div className="App">
