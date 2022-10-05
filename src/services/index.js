@@ -1,13 +1,15 @@
 import { API_KEY } from './constants';
 
 async function fetchData(url) {
-  const response = await fetch(url)
-    .catch((error) => {
-      console.log('LOAD ERROR: ', error);
-    });
-  const data = await response.json();
-  console.log(data);
-  return data;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log('LOAD ERROR: ', error.message);
+    return null;
+  }
 }
 
 export async function fetchMovie(movieId) {

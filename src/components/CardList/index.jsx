@@ -5,7 +5,8 @@ import './styles.css';
 
 function CardList({
   title,
-  options,
+  isPoster,
+  genres,
   setMovieInfo,
 }) {
   const [movieList, setMovieList] = useState([]);
@@ -15,9 +16,12 @@ function CardList({
   let direction = '';
   let myTimer = null;
 
-  const fetchMovies = async (fetchOptions) => {
+  const fetchMovies = async () => {
+    const fetchOptions = {
+      genres,
+    };
     let movies;
-    if (options.genre !== null) {
+    if (genres !== null) {
       movies = await fetchMovieByGenre(fetchOptions);
     } else {
       movies = await fetchPopular();
@@ -27,7 +31,7 @@ function CardList({
   };
 
   useEffect(() => {
-    fetchMovies(options);
+    fetchMovies();
   }, []);
 
   function stopMove() {
@@ -70,13 +74,13 @@ function CardList({
         {`${title}:`}
       </h3>
       <div ref={containerRef} className="relative overflow-hidden">
-        <div className={`flex items-center ${options.isPoster ? 'listPosterContainer' : 'listContainer'}`}>
+        <div className={`flex items-center ${isPoster ? 'listPosterContainer' : 'listContainer'}`}>
           <div ref={cardListRef} className="left-[40px] ease-out relative flex gap-6">
             {movieList.map((movie) => (
               <Movie
                 key={`movie-${movie.id}`}
                 movie={movie}
-                isPoster={options.isPoster}
+                isPoster={isPoster}
                 setMovieInfo={setMovieInfo}
               />
             ))}

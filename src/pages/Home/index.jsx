@@ -8,36 +8,35 @@ function Home() {
   const genresLabelList = getGenresList();
 
   useEffect(() => {
+    // genresLabelList = getGenresList();
     setMovieInfo(getSelectedMovie());
   }, []);
 
-  let configParams = {
-    page: '1',
-    isPoster: true,
-  };
+  let isPoster = true;
+
+  if (!movieInfo) {
+    return null;
+  }
 
   return (
     <div>
-      { (movieInfo !== null)
-        && (
-          <>
-            <MovieDetail movieInfo={movieInfo} />
-            <MovieList id="top_rated" title="Popular on Movy" options={configParams} setMovieInfo={setMovieInfo} />
-            {genresLabelList.map((genre) => {
-              configParams = { ...configParams, genres: genre.id, isPoster: false };
+      <div>
+        <MovieDetail movieInfo={movieInfo} />
+        <MovieList id="top_rated" title="Popular on Movy" isPoster={isPoster} setMovieInfo={setMovieInfo} />
+        {genresLabelList.map((genre) => {
+          isPoster = false;
 
-              return (
-                <MovieList
-                  key={genre.id}
-                  title={genre.name}
-                  options={configParams}
-                  setMovieInfo={setMovieInfo}
-                />
-              );
-            })}
-            ;
-          </>
-        )}
+          return (
+            <MovieList
+              key={genre.id}
+              title={genre.name}
+              isPoster={isPoster}
+              genres={genre.id}
+              setMovieInfo={setMovieInfo}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

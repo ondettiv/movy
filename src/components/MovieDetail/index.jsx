@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import imdbLogo from '../../assets/logos/imdb.png';
 import boockmarkIcon from '../../assets/icons/boockmark.png';
 import playIcon from '../../assets/icons/play.png';
@@ -12,11 +12,8 @@ function MovieDetail({ movieInfo }) {
   const director = movieInfo.credits.crew.find((element) => element.department === 'Directing').name;
   const movieDuration = toHoursAndMinutes(movieInfo.runtime);
 
-  useEffect(() => {
-  });
-
   return (
-    <div className="movieDetail h-[700px] w-full">
+    <div className="h-[700px] w-full">
       <div className="bg-cover bg-center bg-top h-[700px] w-full opacity-40" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original/${movieInfo.backdrop_path})` }} />
       <div className="absolute top-[50px] w-full">
         <div className="relative top-[125px] left-52 text-sm">
