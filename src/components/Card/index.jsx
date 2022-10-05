@@ -1,38 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css';
-import { genresList } from '../../services';
+import {
+  fetchMovie,
+  setSelectedMovie,
+  getGenresList,
+} from '../../services';
 import StarRating from '../StarRating';
+import movyLogo from '../../assets/logos/movy.png';
 
-function Card({ movie, isPoster }) {
+function Card({ movie, isPoster, setMovieInfo }) {
   const movieImagePath = isPoster ? movie.poster_path : movie.backdrop_path;
   const [infoVisible, setInfoVisible] = useState(false);
-  let timeOutId = null;
-
-  const filterByReference = (arr1, arr2) => {
-    let res = [];
-    res = arr1.filter((el) => arr2.find((element) => element === el.id));
-    return res.slice(0, 3);
-  };
-
-  const genresLabelList = filterByReference(genresList, movie.genre_ids);
+  const [genresLabelList, setGenresLabelList] = useState({});
 
   function showInfo() {
-    timeOutId = setTimeout(() => {
-      setInfoVisible(true);
-    }, 250);
+    setInfoVisible(true);
   }
 
   function hideInfo() {
     setInfoVisible(false);
-    clearTimeout(timeOutId);
   }
 
+  async function selectMovie() {
+    const selectedMovie = await fetchMovie(movie.id);
+    setSelectedMovie(selectedMovie);
+    setMovieInfo(selectedMovie);
+  }
+
+  useEffect(() => {
+    const genresList = getGenresList('genresList');
+    const filteredGenres = genresList.filter((el) => (movie.genre_ids.includes(el.id)));
+    setGenresLabelList(filteredGenres.slice(0, 3));
+  }, []);
+
   return (
-    <div className="w-48 flex-none origin-center ease-out duration-100 hover:duration-300 hover:scale-125">
-      <img
-        className="overlay-cover hover:opacity-70"
-        src={`https://image.tmdb.org/t/p/w500/${movieImagePath}`}
-        alt={movie.title}
+    <div
+      className="card w-48 flex-none origin-center ease-out duration-100 hover:duration-300 hover:scale-125"
+      onClick={selectMovie}
+      aria-hidden="true"
+    >
+      <div
+        className="bg-center bg-no-repeat w-[192px] hover:opacity-70"
+        style={{
+          backgroundImage: `url(https://image.tmdb.org/t/p/w500/${movieImagePath}), url(${movyLogo})`,
+          backgroundSize: 'cover, 50%',
+          height: isPoster ? 288 : 108,
+        }}
         onMouseEnter={showInfo}
         onMouseLeave={hideInfo}
       />
@@ -44,7 +57,7 @@ function Card({ movie, isPoster }) {
               <p className="title absolute bottom-[50px] text-sm font-bold pl-2  pr-2">{movie.title}</p>
               { movie.vote_average !== 0
                 && (
-                <div className="absolute top-[60px] pl-2 pr-2">
+                <div className="absolute top-[63px] text-sm pl-2 pr-2">
                   <StarRating rate={movie.vote_average} />
                 </div>
                 )}

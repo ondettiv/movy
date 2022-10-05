@@ -1,0 +1,36 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 1rem;
+  color: white;
+  z-index: 1;
+}
+
+.nav ul {
+  padding: 0;
+  margin-left: 4rem;
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav a {
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav li .active {
+  font-weight: bold;
+  box-sizing: content-box;
+  border-bottom: 3px solid #0578FF;
+}
+
+.nav li :hover {
+  box-sizing: content-box;
+  border-bottom: 3px solid #0578FF;
+}

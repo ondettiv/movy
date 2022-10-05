@@ -1,23 +1,24 @@
-.showSpacer {
+.card .showSpacer {
   content: '-';
 }
 
-.noSpacer {
+.card .noSpacer {
   content: '';
 }
 
-.bullet_spacer::after {
+.card .bullet_spacer::after {
   content: " \2022  ";
 }
-.bullet_spacer:last-child::after {
+
+.card .bullet_spacer:last-child::after {
   content: ""
 }
 
-.genre {
+.card .genre {
   font-size: 10px;
   line-height: 12px;
 }
 
-.title {
+.card .title {
   line-height: 15px;
 }
