@@ -5,10 +5,10 @@ import { getSelectedMovie, getGenresList } from '../../services';
 
 function Home() {
   const [movieInfo, setMovieInfo] = useState(null);
-  const genresLabelList = getGenresList();
+  const [genresLabelList, setGenresLabelList] = useState(null);
 
   useEffect(() => {
-    // genresLabelList = getGenresList();
+    setGenresLabelList(getGenresList());
     setMovieInfo(getSelectedMovie());
   }, []);
 
